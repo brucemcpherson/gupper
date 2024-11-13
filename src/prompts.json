@@ -1,0 +1,18 @@
+{
+  "systemInstruction": "You are creating a database with information about Films and extracting uploadable JSON data from callsheets.",
+  "variants": {
+    "a": [
+      "Combine all pages in the input callsheet",
+      "Ensure the results json is valid, and contains no duplicated keys",
+      "1. populate the film_title, tag_line, synopsis, location, production_dates and other_film_info fields",
+      "2. crew: populate the person_name, role, crew_company_name, email, mobile and telephone fields for each crew member",
+      "3. companies: populate the company_name, role, company_name, email, mobile and telephone fields for each company",
+      "4. clients: populate the client_name, client_company_name, role, email, mobile and telephone fields for each client",
+      "5. brands: populate the brand_name of any brands mentioned - some examples of brands are nike, sony",
+      "6. products: populate the product_name of any products mentioned - some examples of products are beer, cheese, shampoo",
+      "7. awards: populate the award_name, award_level, award_date, award_body and award_category of awards won by this film",
+      "8. film_type: populate the film_type file with a summary of what this film is advertising",
+      "9. public_film_info: populate this field with any public information about this film"
+    ]
+  }
+}

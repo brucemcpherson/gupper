@@ -1,0 +1,218 @@
+{
+  "description": "Callsheet content",
+  "type": "object",
+  "properties": {
+    "public_film_info": {
+      "type": "string",
+      "description": "public information about this film",
+      "nullable": true
+    },
+    "film_type": {
+      "type": "string",
+      "description": "type of film",
+      "nullable": true
+    },
+    "title": {
+      "type": "string",
+      "description": "Film title",
+      "nullable": true
+    },
+    "synopsis": {
+      "type": "string",
+      "description": "Film synopsis",
+      "nullable": true
+    },
+    "tag_line": {
+      "type": "string",
+      "description": "Ad tag line",
+      "nullable": true
+    },
+    "location": {
+      "type": "string",
+      "description": "Ad production location",
+      "nullable": true
+    },
+    "production_dates": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Ad production dates",
+        "nullable": true
+      }
+    },
+    "other_film_info": {
+      "type": "string",
+      "description": "other Ad production info",
+      "nullable": true
+    },
+    "crew": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "person_name": {
+            "type": "string",
+            "description": "person name",
+            "nullable": true
+          },
+          "role": {
+            "type": "string",
+            "description": "role in production",
+            "nullable": true
+          },
+          "crew_company_name": {
+            "type": "string",
+            "description": "crew company name",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "description": "email address",
+            "nullable": true
+          },
+          "mobile": {
+            "type": "string",
+            "description": "mobile number",
+            "nullable": true
+          },
+          "telephone": {
+            "type": "string",
+            "description": "telephone number",
+            "nullable": true
+          }
+        }
+      }
+    },
+    "companies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "company_name": {
+            "type": "string",
+            "description": "company name",
+            "nullable": true
+          },
+          "role": {
+            "type": "string",
+            "description": "role in production",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "description": "email address",
+            "nullable": true
+          },
+          "mobile": {
+            "type": "string",
+            "description": "mobile number",
+            "nullable": true
+          },
+          "telephone": {
+            "type": "string",
+            "description": "telephone number",
+            "nullable": true
+          }
+        }
+      }
+    },
+    "clients": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "client_name": {
+            "type": "string",
+            "description": "client name",
+            "nullable": true
+          },
+          "client_company_name": {
+            "type": "string",
+            "description": "company name",
+            "nullable": true
+          },
+          "role": {
+            "type": "string",
+            "description": "role in production",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "description": "email address",
+            "nullable": true
+          },
+          "mobile": {
+            "type": "string",
+            "description": "mobile number",
+            "nullable": true
+          },
+          "telephone": {
+            "type": "string",
+            "description": "telephone number",
+            "nullable": true
+          }
+        }
+      }
+    },
+    "brands": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "brand_name": {
+            "type": "string",
+            "description": "brand name",
+            "nullable": true
+          }
+        }
+      }
+    },
+    "products": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "product_name": {
+            "type": "string",
+            "description": "product name",
+            "nullable": true
+          }
+        }
+      }
+    },
+    "awards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "nullable": true,
+        "properties": {
+          "award_name": {
+            "type": "string",
+            "description": "award name",
+            "nullable": true
+          },
+          "award_level": {
+            "type": "string",
+            "description": "award level",
+            "nullable": true
+          },
+          "award_date": {
+            "type": "string",
+            "description": "year or date of award",
+            "nullable": true
+          },
+          "award_body": {
+            "type": "string",
+            "description": "who gave the award",
+            "nullable": true
+          },
+          "award_category": {
+            "type": "string",
+            "description": "category of the award",
+            "nullable": true
+          }
+        }
+      }
+    }
+  }
+}

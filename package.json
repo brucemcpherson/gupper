@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "@google-ai/generativelanguage": "^2.7.0",
+    "@google-cloud/storage": "^7.13.0",
+    "@google/generative-ai": "^0.21.0",
+    "chunkosaur": "^1.0.2",
+    "google-auth-library": "^9.14.2",
+    "googleapis": "^113.0.0",
+    "into-stream": "^8.0.1",
+    "p-each-series": "^3.0.0",
+    "stream-mime-type": "^2.0.0",
+    "yargs": "^17.7.2"
+  },
+  "name": "gupper",
+  "version": "1.0.0",
+  "description": "Handy node utility to handle uploads and run gemini",
+  "main": "gupper.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "bruce mcpherson",
+  "license": "ISC"
+}
