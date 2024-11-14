@@ -1,5 +1,5 @@
 # project ID
-P=docai-369211
+P=your-project-id
 
 # config to activate
 AC=default

@@ -7,6 +7,7 @@
     "google-auth-library": "^9.14.2",
     "googleapis": "^113.0.0",
     "into-stream": "^8.0.1",
+    "is": "^3.3.0",
     "p-each-series": "^3.0.0",
     "stream-mime-type": "^2.0.0",
     "yargs": "^17.7.2"

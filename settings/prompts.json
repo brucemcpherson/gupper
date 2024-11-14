@@ -1,5 +1,8 @@
 {
-  "systemInstruction": "You are creating a database with information about Films and extracting uploadable JSON data from callsheets.",
+  "siVariants": {
+    "a": "You are creating a database with information about Films and extracting uploadable JSON data from callsheets.",
+    "b": "You are summarizing a document to someone who has never seen such documents before"
+  },
   "variants": {
     "a": [
       "Combine all pages in the input callsheet",
@@ -13,6 +16,7 @@
       "7. awards: populate the award_name, award_level, award_date, award_body and award_category of awards won by this film",
       "8. film_type: populate the film_type file with a summary of what this film is advertising",
       "9. public_film_info: populate this field with any public information about this film"
-    ]
+    ],
+    "b": "what is this document used for? Who are the likely consumers of it ? Provide summary of its content"
   }
 }

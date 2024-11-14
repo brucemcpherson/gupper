@@ -1,0 +1,10 @@
+{
+  "promptFile": "./settings/prompts.json",
+  "schemaFile": "./settings/schema.json",
+  "resultsFolder": "./results/",
+  "responseMimeType": "application/json",
+  "responseExtension": ".json",
+  "model": "gemini-1.5-flash-8b",
+  "variant": "a",
+  "siVariant": "a"
+}

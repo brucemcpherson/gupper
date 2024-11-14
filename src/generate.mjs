@@ -2,6 +2,7 @@ import { promises as fs } from 'fs';
 import { getGeminiClient } from './services.mjs';
 import { listOnGemini } from './lists.mjs';
 import { bulkResults } from './outputs.mjs';
+import { messExit } from './getargs.mjs';
 
 /**
  * generate results
@@ -96,28 +97,42 @@ export const getSchema = async ({ schemaFile }) => {
 }
 
 /**
+ * get the selected variants for si and prompts
+ * @param {object} rp the cli args 
+ * @param {object} prompts the promotps object (siVariants, variants: {})
+ * @return {object} {text, systemInstruction)
+ */
+export const getPromptText = ( rp, prompts) => {
+  return {
+    text: getVariant (rp , prompts),
+    systemInstruction: getVariant (rp, prompts, 'siVariants')
+  }
+} 
+
+/**
  * get the selected variant
  * @param {object} rp the cli args 
- * @param {string} variant should refer to a key in the variants oblect of the prompts object
- * @param {string} promptFile the file containing the prompt variants
- * @param {object} prompts the promotps object (systemInstruction, variants: {})
- * @param {*} prompts 
+ * @param {string} rp.variant should refer to a key in the variants oblect of the prompts object
+ * @param {string} rp.promptFile the file containing the prompt variants
+ * @param {object} prompts the promotps object (siVariants:{}, variants: {})
+ * @param {string} [variantKey='variants'] key in prompts object that contains the variants
+ * @returns {string} the variant text
  */
-export const getVariant = ({ variant, promptFile }, prompts) => {
+export const getVariant = ({ variant,  promptFile }, prompts, variantKey = 'variants') => {
   // because variant can be suppled as an array we need to clean that up
-  const { variants = {} } = prompts
-  if (!Reflect.has(variants, variant) || !variants[variant]) {
-    const mess = `no variant ${variant} in .variants in ${promptFile} file`
-    console.log(mess)
-    throw mess
+  
+  if (!Reflect.has(prompts, variantKey)) {
+    messExit (`no variantKey ${variantKey} in in ${promptFile} file`)
+  }
+
+  const variants = prompts[variantKey]
+  if (!Reflect.has(variants, variant) || !variants[variant])  {
+    messExit (`no variant ${variant} in ${variantKey} in $ ${promptFile} file`)
   }
   let text = variants[variant]
   if (Array.isArray(text)) text = text.join("\n")
 
-  return {
-    systemInstruction: prompts.systemInstruction,
-    text
-  }
+  return text
 }
 /**
  * make gemini query
@@ -131,9 +146,15 @@ export const getVariant = ({ variant, promptFile }, prompts) => {
  */
 export const getGemmer = async (rp) => {
   const { model, responseMimeType } = rp
-  const [responseSchema, prompts] = await Promise.all([getSchema(rp), getPrompts(rp)])
-  const { text } = getVariant(rp, prompts)
-  const { systemInstruction } = prompts
+  const [responseSchema, prompts] = await Promise.all([
+    rp.schemaFile==='none' ? Promise.resolve(null) : getSchema(rp), 
+    getPrompts(rp)
+  ])
+
+  const {
+    text,
+    systemInstruction
+  } = getPromptText (rp, prompts)
 
   const pack = {
     model,

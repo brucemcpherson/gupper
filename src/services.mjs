@@ -31,7 +31,7 @@ export const getGeminiClient = () => {
 
 
 // This is the gemini key from the gemini ai studio
-const getKey = ({ key = "API_KEY" } = {}) => {
+const getKey = ({ key = "GEMINI_API_KEY" } = {}) => {
   const apiKey = process.env[key]
   if (!apiKey) {
     console.log (`missing api-key - set ${key} value in env with export ${key}=your api key`)
@@ -93,3 +93,4 @@ export const getRestService = async () => {
   }
   return restService
 }
+

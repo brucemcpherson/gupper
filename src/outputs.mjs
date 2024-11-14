@@ -6,6 +6,8 @@ import path from 'path';
 import { pipeline } from 'node:stream/promises';
 import intoStream from 'into-stream';
 import { getStorageClient, getDriveClient } from './services.mjs';
+import { messExit } from './getargs.mjs';
+
 
 /**
  * there's not much point in doing bulk with fs
@@ -14,14 +16,15 @@ import { getStorageClient, getDriveClient } from './services.mjs';
  * it could be useful if you wanted to wait till all analysis had completed successfully befire emitting anything
  * @returns {Promise <instanceOf Bulker}
  */
-export const bulkResults = async ({ threshold = 1, resultsFolder, responseMimeType } = {}) => {
+export const bulkResults = async ({ threshold = 1, resultsFolder, responseMimeType, responseExtension }) => {
 
   const flusher = ({ values }) => Promise.all(values.map(({ file, text }) => {
     return outputResult({
       name: file.displayName,
       mimeType: responseMimeType,
       text,
-      resultsFolder
+      resultsFolder,
+      responseExtension
     })
   }))
 
@@ -31,9 +34,9 @@ export const bulkResults = async ({ threshold = 1, resultsFolder, responseMimeTy
 /**
  * generate name from file + results folder
  */
-const outputResult = async ({ text, resultsFolder, name, mimeType }) => {
+const outputResult = async ({text, resultsFolder, name, mimeType, responseExtension}) => {
 
-  const outputBase = path.basename(name) + '.json'
+  const outputBase = path.basename(name) + getExtension ({mimeType, responseExtension})
   const gdFile = getGdFileId(resultsFolder)
   if (gdFile.fileId) {
     if (!gdFile.isFolder) {
@@ -100,4 +103,22 @@ const outputResult = async ({ text, resultsFolder, name, mimeType }) => {
 
   }
 }
+/**
+ * gemini only does 3 types of output - json, text, and text/x.enum
+ * @return {string} the extension to use
+ */
+const getExtension = ({mimeType, responseExtension}) => {
+  if (responseExtension) return responseExtension
 
+  if (mimeType === 'application/json') return ".json"
+
+  // everything else should be text/plain - but we'll make it an md 
+  if (mimeType === "text/plain") {
+    return ".md"
+  } else if (mimeType === "text/x.enum") {
+    return ".txt"
+  } else {
+    messExit("unrecognized mimeType", mimeType)
+  }
+
+}

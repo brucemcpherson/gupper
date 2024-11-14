@@ -1,20 +1,20 @@
 /**
  * manage uploads, caching and generating on gemini
  */
-import { runParams } from './getargs.mjs'
-import { uploads } from './uploads.mjs'
-import { listUploads } from './lists.mjs'
-import { pruneUploads } from './prunes.mjs'
-import { getInputs } from './inputs.mjs'
-import { deleteUploads } from './deletes.mjs'
+import { runParams } from './src/getargs.mjs'
+import { uploads } from './src/uploads.mjs'
+import { listUploads } from './src/lists.mjs'
+import { pruneUploads } from './src/prunes.mjs'
+import { getInputs } from './src/inputs.mjs'
+import { deleteUploads } from './src/deletes.mjs'
+import { generate } from './src/generate.mjs'
 import pEachSeries from 'p-each-series';
-import { generate } from './generate.mjs'
 
 // entry point
 const main = async () => {
   
   // get args from cli
-  const rp = runParams()
+  const rp = await runParams()
 
   const startedAt = new Date().getTime()
 

@@ -93,7 +93,7 @@ export const getUploads = async ({ upload, uploadList }) => {
  * get a key from apikey in env
  * @returns {string} key
  */
-export const getKey = ({ key = "API_KEY" } = {}) => process.env[key]
+export const getKey = ({ key = "GEMINI_API_KEY" } = {}) => process.env[key]
 
 
 /**

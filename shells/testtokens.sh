@@ -1,6 +1,6 @@
 # check tokens have scopes required for DRIVE access
 # set below to a fileid on drive you have access to
-FILE_ID=11gILGX6efB1MJAaGD7comQY6BCykusO1
+FILE_ID=your-drive-file-id
 
 # get the access tokens and current project
 ADT=$(gcloud auth application-default print-access-token)
