@@ -13,7 +13,7 @@
     "yargs": "^17.7.2"
   },
   "name": "gupper",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Handy node utility to handle uploads and run gemini",
   "main": "gupper.mjs",
   "scripts": {
