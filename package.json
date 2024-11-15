@@ -13,23 +13,26 @@
     "yargs": "^17.7.2"
   },
   "name": "gupper",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Handy node utility to handle uploads and run gemini",
   "main": "gupper.mjs",
   "scripts": {
     "start": "node gupper.mjs"
   },
+  "bin": {
+    "gupper": "./gupper.mjs"
+  },
   "author": "bruce mcpherson",
-	"license": "MIT",
+  "license": "MIT",
   "repository": "brucemcpherson/gupper",
   "keywords": [
-		"gemini",
-		"drive",
-		"cloud storage",
-		"gdrive",
-		"gcs",
-		"application default credentials",
-		"schema",
-		"prompts"
-	]
+    "gemini",
+    "drive",
+    "cloud storage",
+    "gdrive",
+    "gcs",
+    "application default credentials",
+    "schema",
+    "prompts"
+  ]
 }

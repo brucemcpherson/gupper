@@ -14,12 +14,5 @@ Here’s my solution – I’ve found it super useful. Hope you do too.
 Clone this repo and see this article - https://ramblings.mcpher.com/manage-gemini-uploads-schemas-and-prompts/ for full write up on how and why to use. 
 
 
-You can also install globally 
-````
-npm i -g gupper
-
-eg.
-node gupper -- -u my.pdf -g
-````
 
 
