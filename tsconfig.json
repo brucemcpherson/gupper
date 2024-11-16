@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "es2016",                                 /* Set the JavaScript language version for emitted JavaScript and */
+    "rootDir": "./",                                  /* Specify the root folder within your source files. */
+    "allowJs": true,                                  /* Allow JavaScript files to be a part of your program. Use the */
+    "outDir": "./dist",                                   /* Specify an output folder for all emitted files. */
+    "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing */
+    "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
+    "strict": true,                                      /* Enable all strict type-checking options. */
+    "noUnusedLocals": true,                           /* Enable error reporting when local variables aren't read. */
+    "noUnusedParameters": true,                       /* Raise an error when a function parameter isn't read. */
+    "exactOptionalPropertyTypes": true,               /* Interpret optional property types as written, rather than adding */
+    "noImplicitReturns": true,                        /* Enable error reporting  that do not explicitly return */
+    "noFallthroughCasesInSwitch": true,               /* Enable error reporting for fallthrough in switch statements. */
+    "skipLibCheck": true,                              /* Skip type checking all .d.ts files. */
+    "resolveJsonModule": true,
+    "moduleResolution": "node"
+  },
+  "include": ["**/*.mjs", "./package.json", "./gupper.json"]
+}

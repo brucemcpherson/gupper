@@ -12,12 +12,14 @@
     "stream-mime-type": "^2.0.0",
     "yargs": "^17.7.2"
   },
+  "module": "./gupper.mjs",
   "name": "gupper",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Handy node utility to handle uploads and run gemini",
-  "main": "gupper.mjs",
+  "main": "./gupper.mjs",
   "scripts": {
-    "start": "node gupper.mjs"
+    "start": "node gupper.mjs",
+    "build": "tsc"
   },
   "bin": {
     "gupper": "./gupper.mjs"

@@ -24,7 +24,7 @@ export const runParams = async () => {
       }
       return !errors.length
     }, true)
-    .version("1.0.3")
+    .version("1.0.4")
     .options({
       generate: {
         default: defaultArgs.generate || false,
