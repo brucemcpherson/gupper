@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /**
  * manage uploads, caching and generating on gemini
  */
