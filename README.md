@@ -56,7 +56,15 @@ But remember to not commit this to github or anywhere else. For more secure ways
 
 ### The file management cli arguments and examples
 
-Now we have all that authorization stuff out of the way, let's get to some uploading examples.
+Now we have all that authorization stuff out of the way, let's get to some uploading examples. Each of these examples assumes you have cloned the repo and are running the app with node.
+````
+node gupper.mjs .....options
+````
+If you install the app globally (or use npx) you can instead use
+````
+gupper ...options
+````  
+See the end of the article for how to install globally.
 
 #### A single local file to Gemini
 
@@ -106,6 +114,10 @@ node gupper.mjs --prune
 
 ````
 node gupper.mjs --list
+````
+you can get a brief list with
+````
+node gupper.mjs --list --brief
 ````
 
 ### Upload, prune and list all at once
@@ -239,6 +251,11 @@ on cloud storage
 node gupper.mjs --generate --results-folder gs://mybucket/myfolder/
 ````
 
+### Skipping generation if output already exists
+````
+node gupper.mjs --generate --skip-regenerate 
+````
+
 ## Specifying a prompts and schemas
 
 ### Schema file and prompt file locations
@@ -320,13 +337,19 @@ Gupper has it's own defaults built in, but you can set your own with a gupper.js
 Modify this as required.
 
 ## Help
+````
+node gupper.mjs --help
+````
 
 Here are all the available arguments.
 ````
+
 Options:
       --help                      Show help                            [boolean]
       --version                   Show version number                  [boolean]
   -g, --generate                  generate from prompts
+                                                      [boolean] [default: false]
+      --skipRegenerate, --sr      skip generate if results file already exists
                                                       [boolean] [default: false]
       --uploadList, --ul          file name of list of files to upload - can be
                                   gs://, gd:// or local file mixed      [string]
@@ -338,6 +361,8 @@ Options:
   -f, --filter                    filter displayname      [string] [default: ""]
   -m, --maxItems                  max Items to process
                                                     [number] [default: Infinity]
+  -o, --offset                    start at this offset in the upload list
+                                                           [number] [default: 0]
   -c, --chunkSize                 items per page to read from gemini uploads API
                                                           [number] [default: 10]
   -t, --threshold                 threshold at which to start flushing output
@@ -349,6 +374,8 @@ Options:
   -s, --schemaFile                schema file - use 'none' if no schema required
                                     [string] [default: "./settings/schema.json"]
   -l, --list                      list uploads        [boolean] [default: false]
+  -b, --brief                     only show minimal info
+                                                      [boolean] [default: false]
   -d, --deleteItem                delete a single item                  [string]
       --deleteAll, --da           delete all uploads                   [boolean]
   -r, --resultsFolder             can be local, gd:// or gs://
@@ -357,22 +384,38 @@ Options:
    [string] [choices: "application/json", "text/plain", "text/x.enum"] [default:
                                                              "application/json"]
       --responseExtension, --rex  extension for results file - default derived
-                                  from reponseMimeType    [string] [default: ""]
+                                  from reponseMimeType
+                                                     [string] [default: ".json"]
       --model, --mod              gemini model to use
                                        [string] [default: "gemini-1.5-flash-8b"]
-
 ````
+## shortcuts
+All of the options have a short alias, as per usual shell convention. You can string some of these together: For example get a brief list of uploads and then generate against 3 uploads starting and the 2nd newest.
+````
+node gupper.mjs -lb -g -m 3 -o 1
+```` 
+is the same as
+````
+node gupper.mjs --list --brief --generate --max-items 3 --offset 1
+````
+### Combining with other shell commands
+Example - get a count of the number of uploaded files
+````
+node gupper.mjs -lb | wc -l
+````
+
 ## Chunking and bulking
 
 Since the gemini upload API is paged, gupper uses my [Chunker and Bulker classes Paging large data sets and how to make Apps Script understand generators](https://ramblings.mcpher.com/paging-large-data-sets-and-how-to-make-apps-script-understand-generators/) to throttle input and output. This comes with a number of advanced options that you can set via cli arguments.
 
 ````
-node gupper.mjs --generate --chunk-size x --max-items y --threshold z
+node gupper.mjs --generate --chunk-size x --max-items y --threshold z --offset o
 ````
 where:
 - chunk-size - how many to read in one go from the gemini upload api
 - max-items - the maximimum number of items to process
 - threshold - at which point to start writing results
+- offset - where to start from - default is 0 which means the latest upload
 
 It's unlikely you'll need to use these additional options other than --max-items. In an edge case, for example if you want to postpone any writing of any results until everything has completed successfully, then you could set the threshold to a large number. This would prevent any results files being created until the number of queued results reached the threshold or everything was complete.
 
@@ -414,5 +457,6 @@ Whichever method you choose, remember you'll need to follow the instructions giv
 - Set up application default credentials (if you're using google drive or google storage)
 - Create a schema file if you need structured output
 - Create a prompt file with your prompts and system instructions
+- Optionally create a gupper.json with your favorite defaults
 
 

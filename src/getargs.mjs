@@ -3,7 +3,8 @@ const require = createRequire(import.meta.url);
 const yargs = require('yargs/yargs');
 const { hideBin } = require('yargs/helpers')
 const is = require('is');
-import { promises as fs } from 'fs';
+import { getJsonFile } from "./filing.mjs";
+import { messExit } from "./filing.mjs";
 
 export const runParams = async () => {
   const defaultArgs = await getDefaultArgs()
@@ -24,12 +25,18 @@ export const runParams = async () => {
       }
       return !errors.length
     }, true)
-    .version("1.0.6")
+    .version("1.1.0")
     .options({
       generate: {
         default: defaultArgs.generate || false,
         description: "generate from prompts",
         alias: "g",
+        type: "boolean"
+      },
+      skipRegenerate: {
+        default: defaultArgs.skipReGenerate || false,
+        description: "skip generate if results file already exists",
+        alias: "sr",
         type: "boolean"
       },
       uploadList: {
@@ -73,6 +80,12 @@ export const runParams = async () => {
         alias: "m",
         type: 'number'
       },
+      offset: {
+        default: defaultArgs.offset || 0,
+        description: "start at this offset in the upload list",
+        alias: "o",
+        type: 'number'
+      },
       chunkSize: {
         default: defaultArgs.chunkSize || 10,
         description: "items per page to read from gemini uploads API",
@@ -107,6 +120,12 @@ export const runParams = async () => {
         default: defaultArgs.list || false,
         description: "list uploads",
         alias: "l",
+        type: "boolean"
+      },
+      brief: {
+        default: defaultArgs.brief || false,
+        description: "only show minimal info",
+        alias: "b",
         type: "boolean"
       },
       deleteItem: {
@@ -158,26 +177,18 @@ export const runParams = async () => {
 
 }
 
-export const messExit = (message='it failed') => {
-  console.debug ("detected an error - giving up")
-  console.debug (message)
-  process.exit(1)
-}
+
 
 const getDefaultArgs = async () => {
   // this sets local defaults for yargs
   const defaultsFile = 'gupper.json'
-  const exists = await fs.stat(defaultsFile).then(() => true, () => false);
-  if (!exists) {
+  const defaults = await getJsonFile(defaultsFile, false)
+
+  if (!defaults) {
     console.log (`...no ${defaultsFile} found - using standard defaults`)
     return {}
   } else {
-    const defaults = await fs.readFile(defaultsFile)
-    try {
-      return JSON.parse (defaults.toString())
-    } catch (err) {
-      messExit (`${defaultsFile} is not valid json`)
-    }
+    return defaults
   }
   
 }

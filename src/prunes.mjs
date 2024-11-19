@@ -6,7 +6,7 @@ import { deleteUploads } from "./deletes.mjs"
  * lets get rid of the ones with the same hash
  * @param {object} args cli args
  * @param {boolean} args.prune whether to prune
- * @returns {Promise<object[]>} removed items
+ * @returns {Promise<object[]>} removal stats
  */
 export const pruneUploads = async ({prune}) => {
   
@@ -42,8 +42,9 @@ export const pruneUploads = async ({prune}) => {
   }
 
   // now just delete these dups
-  const removals = await Promise.all(remove.map(f => deleteUploads({ deleteItem: f.name })))
-  console.log(`...pruned ${removals.length} duplicates`)
-  return removals
+  const bulker = await deleteUploads ({deleteItems: remove.map (f=>f.name)}, false)
+  const stats = await bulker.done()
+  console.log(`...pruned ${stats.items} duplicates`)
+  return stats
 
 }

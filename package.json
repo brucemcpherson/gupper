@@ -14,7 +14,7 @@
   },
   "module": "./gupper.mjs",
   "name": "gupper",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "description": "Handy node cli utility to manage uploads (local,google drive, google cloud storage) and run gemini",
   "main": "./gupper.mjs",
   "scripts": {
