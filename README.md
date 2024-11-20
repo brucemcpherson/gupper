@@ -24,6 +24,10 @@ Clone this repo and see this article - https://ramblings.mcpher.com/manage-gemin
 
 ### What gupper can do right from its cli interface
 
+`
+Note: all these examples are available in v1.1.0 and above. 
+`
+
 I found it a great timesaver when playing around with variants of schemas, prompts and various assortments of files.
 
 - Upload single or lists of files to gemini from the local filesystem, Cloud Storage or Google Drive.
@@ -52,7 +56,7 @@ If you have a shell file  (let's say it's called key.sh) with the export command
 . ./key.sh
 ````
 
-But remember to not commit this to github or anywhere else. For more secure ways of handling secrets locally see, [Kubernetes secret values as shell environment variables](https://ramblings.mcpher.com/gcp/kubernetes-secret-values-as-shell-environment-variables/) and Sharing secrets between Doppler, GCP and Kubernetes(https://ramblings.mcpher.com/gcp/secrets-doppler-gcp-kubernetes/).
+But remember to not commit this to github or anywhere else. For more secure ways of handling secrets locally see, [Kubernetes secret values as shell environment variables](https://ramblings.mcpher.com/gcp/kubernetes-secret-values-as-shell-environment-variables/) and [Sharing secrets between Doppler, GCP and Kubernetes](https://ramblings.mcpher.com/gcp/secrets-doppler-gcp-kubernetes/).
 
 ### The file management cli arguments and examples
 
@@ -96,13 +100,25 @@ In this case you can just copy the share link that the Drive UI can provide.
 node gupper.mjs --upload https://drive.google.com/file/d/drive-file-id/...etc
 ````
 
-Upload a list of files (names in a text file) to Gemini
+#### Upload a list of files (names in a text file) to Gemini
 
-This can be a mix of local files, drive or cloud storage uris as required.
+This can be a mix of local files, drive or cloud storage uris as required, each specified as above. 1 filename per line.
 ````
 node gupper.mjs --upload-list listoffiles.txt
 ````
+##### Tip
+gupper doesn't support wildcards, but it doesn't actually need to. 
 
+Here's how to to load all the pdf files in the 'samples' local folder, load them to gemini and generate results on each.
+````
+mktemp | xargs -I {} sh -c 'ls samples/*.pdf > {} ;gupper -g --ul {};rm {}' 
+````
+And an example from cloud storage
+````
+mktemp | xargs -I {} sh -c 'gs://my-bucket/fid-callsheets/feeder/e96*.pdf > {} ;gupper -g --ul {};rm {}' 
+
+````
+You'll find wild.sh in the shells folder of the repo which you can adapt to automate this approach if you prefer.
 ### Get rid of duplicates from Gemini by comparing hashes
 
 It's possible that you'll have loaded the same content from different files. To avoid running the same thing twice, you can use the prune parameter to remove files from gemini uploads that have exactly the same content
